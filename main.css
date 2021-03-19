@@ -79,3 +79,9 @@ article {
     padding: 60px;
     border-radius: 8pt;
 }
+
+.but {
+    color: white;
+    background-color: brown;
+    border-radius: 6px;
+}
