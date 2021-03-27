@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,21 +18,89 @@
         alert("Welcome! Feel free to take a look around!");
     }
 </script>
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 20) {
+                $('#toTopBtn').fadeIn();
+            } else {
+                $('#toTopBtn').fadeOut();
+            }
+        });
 
-<body onload="welcome()">
-    <br>
-    <br>
-    <div class="container1">
-        <img src="media/cheader.jpg" alt="Snow" style="width:100%;" height="300px;">
-        <div class="centered">
-            <h1> Shivdeep Khangura</h1>
-            <h5>Developer</h5>
-            <p>Java, Python, JavaScript</p>
-        </div>
-    </div>
+        $('#toTopBtn').click(function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 1000);
+            return false;
+        });
+    });
+</script>
 
+<script>
+    var TxtRotate = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
 
-    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light nav-fill w-100">
+    TxtRotate.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+        var that = this;
+        var delta = 300 - Math.random() * 100;
+
+        if (this.isDeleting) {
+            delta /= 2;
+        }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+        }
+
+        setTimeout(function() {
+            that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('txt-rotate');
+        for (var i = 0; i < elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-rotate');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtRotate(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+        document.body.appendChild(css);
+    };
+</script>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light nav-fill w-100">
         <div class="collapse navbar-collapse d-flex justify-content-center" id="collapsibleNavbar">
             <ul class="navbar-nav nav-fill w-100">
                 <li class="nav-item">
@@ -50,31 +119,116 @@
             </ul>
         </div>
     </nav>
+
+    <div class="container1">
+        <img src="media/keyboard.jpg" class="img-fluid" alt="Snow" style="width:100%;" height="300px;">
+        <div class="top">
+            <link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
+            <h1>Hello
+                <span class="txt-rotate" data-period="2000" data-rotate='[ "Friend.", "Viewer.", "World!", "From Shivdeep!" ]'></span>
+            </h1>
+            <h2>Scroll down to see more!</h2>
+
+        </div>
+    </div>
+
     <div id="grad1">
         <br>
-        <br>
+        <header>
+            <h1> Shivdeep Khangura</h1>
+            <h5>Developer</h5>
+            <p>Java, Python, JavaScript</p>
+        </header>
         <div class="container-fluid">
-            <div class="row ">
-                <div class="col-5 d-flex justify-content-center">
-                    <img src="IMG_2890_Facetune_04-12-2020-21-44-51.jpg" width="300" height="335">
+            <article>
+                <div class="row ">
+                    <div class="col-5 d-flex justify-content-center">
+                        <img src="IMG_2890_Facetune_04-12-2020-21-44-51.jpg" width="300" height="335">
+                    </div>
+                    <div class="col-5 d-flex justify-content-center">
+                        <div class="container">
+                            <p>I am a software and application developer, currently living in Toronto. I have graduated from Brock University with a BSc in Computer Science and a concentration in Software Engineering. I am well versed with Java, Python and
+                                JavaScript.
+                            </p>
+                            <p>
+                                To learn more about me, my projects and my other expertise, you may click the buttons below or the navbar options above to view my background, projects and leadership experience.
+                            </p>
+                            <br>
+                            <div class="col text-center">
+                                <a href="education.html"> <button class="button1 bouncy">
+                                     Education
+                            </button>
+                                </a>
+                                <a href="projects.html"> <button class="button1 bouncy">
+                                    Projects
+                           </button>
+                                </a>
+                                <a href="Leadership.html"> <button class="button1 bouncy">
+                                    Leadership
+                           </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5 d-flex justify-content-center">
-                    <div class="container">
-                        <p>I am a software and application developer, currently living in Toronto. I have graduated from Brock University with a BSc in Computer Science and a concentration in Software Engineering. I am well versed with Java, Python and JavaScript.
-                        </p>
-                        <p>
-                            To learn more about me, my projects and my other expertise, you may click the buttons above to view my background, projects and leadership experience.
-                        </p>
+            </article>
+            <br>
+            <br>
+            <header>
+                <h1> More About Me</h1>
+            </header>
+            <div class="row ">
+                <div class="col-4 d-flex justify-content-center">
+                    <article2>
+                        <h2>Hobbies</h2>
+                        While two of my favourite things are coffee and coding (not in any particular order), there are a few other things I enjoy, such as Photography and Arts! My Nikon D3500 and I like to go on many adventures together, whether it be cities or the country
+                        side. After a long day of working, I like to relax by sketching in my artbook or digitally on my iPad.
+                    </article2>
+                </div>
+                <div class="col-4 d-flex justify-content-center">
+                    <article2>
+                        <h2>Interests</h2>
+                        Learning is very important to me, outside of the computer science scope, my other favourite topics include astronomy, philosophy, ancient history and biochemistry!
+                    </article2>
+                </div>
+                <div class="col-4 d-flex justify-content-center">
+                    <article2>
+                        <h2>Coming Soon</h2>
+                        To keep my skills keen and my ambition flowing, I am constantly working on new projects! Here are some apps I am currently working on:
+
+                        <li>Business/Social E-Card Builder</li>
+                        <li>Self-Care Journaling/Daily Affirmations App</li>
+                    </article2>
+                </div>
+            </div>
+            <br>
+            <br>
+            <header>
+                <h1> Contact Me</h1>
+            </header>
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-center">
+                    <div>
+                        <ul class="social-network social-circle">
+                            <li><a href="https://www.linkedin.com/in/shivdeepkhangura/" class="icoLinkedin" title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
         </div>
-        <br>
-
-
-
     </div>
+
+
+    <a href="#" id="toTopBtn" class="cd-top text-replace js-cd-top cd-top--is-visible cd-top--fade-out" data-abc="true"></a>
+
 </body>
+
+
+
+</html>
 
 </html>
 
