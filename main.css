@@ -483,6 +483,33 @@ a.socialIcon:hover,
     padding: 30px;
   }
 
+
+
+/* Create four equal columns that floats next to each other */
+.columnthird {
+    float: left;
+    width: 33%;
+  }
+  
+  
+  /* Responsive layout - makes a two column-layout instead of four columns */
+  @media screen and (max-width: 1000px) {
+    .columnthird {
+      width: 33%;
+    }
+  }
+  
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .columnthird {
+      width: 100%;
+    }
+  }
+
+  .columnthird {
+    padding: 30px;
+  }
+
   .ProjectFade {
     position: relative;
     width: 100%;
